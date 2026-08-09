@@ -1,4 +1,5 @@
 .env
+ui/.env.local
 backend/.env
 backend/.venv
 backend/__pycache__/

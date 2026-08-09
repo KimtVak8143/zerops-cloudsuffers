@@ -67,7 +67,15 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 #    ai-radar-backend
 ```
 
-### 5. Frontend setup
+### 5. Seed sample trend data
+
+```powershell
+cd backend
+.\.venv\Scripts\activate
+python seed.py
+```
+
+### 6. Frontend setup
 
 ```powershell
 cd ui
@@ -84,91 +92,114 @@ npm run dev
 
 - `backend/` — FastAPI app, SQLAlchemy models, Alembic migrations
 - `ui/` — Next.js TypeScript frontend
-- `docker-compose.yml` — PostgreSQL service
+- `docker-compose.yml` — local PostgreSQL service for development
 - `.env.example` — environment variable examples
 - `.gitignore` — ignored build and local files
 
-For now create only:
-
-```text
-/
-```
-
-with a placeholder AI Radar dashboard.
-
-The page should contain:
-
-* Application name: AI Radar
-* Short tagline:
-  "Discover what's changing in AI."
-* Placeholder sections:
-
-  * Trending
-  * Emerging
-  * Categories
-
-Do not implement the full trend UI yet.
-
-Use a clean dark-first aesthetic, but keep the implementation simple.
-
-Avoid introducing a large UI component library unless already installed.
-
----
-
-# Docker Compose
-
-Create a minimal docker-compose.yml containing PostgreSQL only.
-
-Example requirements:
-
-* PostgreSQL 16 or another currently stable PostgreSQL version
-* persistent named volume
-* configurable database/user/password through environment variables
-* expose PostgreSQL locally
-
-Do NOT containerize the frontend or backend yet.
-
-I want to run them directly during development.
-
----
-
-# Developer experience
-
-Add useful scripts/documentation for:
+## Deployment
 
 ### Frontend
-
-```text
-npm/pnpm install
-npm/pnpm run dev
-```
+- Deploy the `ui/` directory to Vercel.
+- Use `NEXT_PUBLIC_API_URL` in Vercel to point at the deployed Zerops backend base URL.
+- Keep the frontend configuration environment-driven; do not hardcode `localhost:8000`.
 
 ### Backend
-
-```text
-python -m venv .venv
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
+- Deploy the `backend/` directory to Zerops.
+- `zerops.yaml` defines the `api` service for the FastAPI backend.
+- The backend starts with `uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}`.
+- The backend uses `DATABASE_URL` and `CORS_ORIGINS` from environment variables.
+- `initCommands` runs `alembic upgrade head` before the app starts.
+- Health check is configured against `/health`.
 
 ### Database
+- The Zerops database service should be named `db`.
+- The backend should use the generated `db_connectionString` for `DATABASE_URL`.
+- Local development continues to use Docker Compose PostgreSQL.
 
-```text
+## Required environment variables
+
+### Backend
+- `DATABASE_URL` — full SQLAlchemy connection URL for PostgreSQL
+- `LLM_API_KEY` — model API key (optional for now)
+- `LLM_MODEL` — model name, e.g. `gpt-4o-mini`
+- `CORS_ORIGINS` — comma-separated allowed origins, e.g. `http://localhost:3000`
+
+### Frontend
+- `NEXT_PUBLIC_API_URL` — base URL of the backend API, e.g. `http://localhost:8000` locally or the Zerops backend URL in production
+
+## Local workflow
+
+1. Copy environment files
+
+```powershell
+copy .env.example .env
+cd backend
+copy .env.example .env
+```
+
+2. Start local PostgreSQL
+
+```powershell
 docker compose up -d
 ```
 
-Document the complete local setup in README.md.
+3. Install backend dependencies
 
-Include:
+```powershell
+cd backend
+python -m venv .venv
+.\.venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-1. Prerequisites
-2. Clone/setup
-3. Start PostgreSQL
-4. Configure environment variables
-5. Run Alembic migrations
-6. Start backend
-7. Start frontend
-8. Health-check endpoint
+4. Run Alembic migrations
+
+```powershell
+cd backend
+.\.venv\Scripts\activate
+alembic upgrade head
+```
+
+5. Start backend locally
+
+```powershell
+cd backend
+.\.venv\Scripts\activate
+python run.py
+```
+
+6. Start frontend locally
+
+```powershell
+cd ui
+npm install
+npm run dev
+```
+
+## Verify locally
+
+- Backend health: `http://localhost:8000/health`
+- API health: `http://localhost:8000/api/v1/health`
+- Trend list: `http://localhost:8000/api/v1/trends`
+- Trend detail: `http://localhost:8000/api/v1/trends/<slug>`
+- Frontend should use `NEXT_PUBLIC_API_URL=http://localhost:8000`
+
+## Zerops deployment notes
+
+1. Create a Zerops service named `api` using the `backend/` directory.
+2. Create a Zerops PostgreSQL service named `db`.
+3. Set `DATABASE_URL` in the `api` service from the generated `db_connectionString`.
+4. Set `CORS_ORIGINS` to the Vercel frontend origin in production.
+5. Set `LLM_API_KEY` and `LLM_MODEL` in Zerops if needed.
+6. Deploy the frontend from `ui/` on Vercel and set `NEXT_PUBLIC_API_URL` to the backend URL.
+7. Verify `GET /health` returns `{"status":"ok"}`.
+
+## Notes
+
+- Local development remains independent of Zerops.
+- The backend uses environment variables for production configuration.
+- Do not commit `.env` files or real credentials.
+
 
 ---
 
