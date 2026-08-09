@@ -1,0 +1,9 @@
+[project]
+name = "ai-radar-backend"
+version = "0.1.0"
+description = "AI Radar backend convenience project file"
+authors = ["AI Radar <dev@example.com>"]
+
+[project.scripts]
+# If this project is installed in the environment, this exposes a shortcut CLI
+ai-radar-backend = "run:main"
