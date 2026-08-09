@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 
 from app.models.base import Base
+from app.models.source import Source
 
 
 class Trend(Base):
