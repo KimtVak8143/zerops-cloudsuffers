@@ -1,0 +1,80 @@
+:root {
+  color-scheme: dark;
+  color: #f7f7fb;
+  background: #06070f;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: radial-gradient(circle at top, rgba(96, 100, 255, 0.14), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(0, 255, 207, 0.08), transparent 25%),
+    #06070f;
+}
+
+.page-shell {
+  min-height: 100vh;
+  padding: 48px 24px;
+}
+
+.page-content {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #a3b4ff;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(3rem, 4vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.description {
+  margin: 24px 0 0;
+  max-width: 720px;
+  color: #c7d6ff;
+  line-height: 1.75;
+}
+
+.grid {
+  display: grid;
+  gap: 18px;
+  margin-top: 52px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.card {
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  background: rgba(18, 22, 46, 0.8);
+  backdrop-filter: blur(18px);
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 1.35rem;
+}
+
+.card p {
+  margin: 0;
+  line-height: 1.7;
+  color: #d8e2ff;
+}
