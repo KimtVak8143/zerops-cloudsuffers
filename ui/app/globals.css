@@ -397,12 +397,13 @@ h1 {
 }
 
 .trend-status-card {
-  display: grid;
-  gap: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   min-width: 220px;
   padding: 22px;
   border-radius: 24px;
-  background: rgba(20, 28, 52, 0.8);
+  background: rgba(20, 28, 52, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -412,8 +413,8 @@ h1 {
   justify-content: center;
   padding: 10px 16px;
   border-radius: 999px;
-  background: rgba(109, 175, 255, 0.12);
-  color: #b2c5ff;
+  background: rgba(109, 175, 255, 0.14);
+  color: #e6f0ff;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-size: 0.78rem;
@@ -421,7 +422,7 @@ h1 {
 
 .momentum-block {
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .momentum-label {
@@ -549,19 +550,22 @@ h1 {
 
 .related-card {
   display: grid;
+  grid-template-columns: 1fr auto;
   gap: 14px;
+  align-items: center;
   padding: 22px;
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(18, 24, 45, 0.94);
   text-decoration: none;
   color: #f5f8ff;
-  transition: transform 160ms ease, border-color 160ms ease;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
 }
 
 .related-card:hover {
   transform: translateY(-3px);
   border-color: rgba(109, 175, 255, 0.35);
+  background: rgba(28, 38, 68, 0.95);
 }
 
 .related-category {
@@ -573,14 +577,16 @@ h1 {
 }
 
 .related-card h3 {
-  margin: 0;
+  margin: 4px 0 0;
   font-size: 1.15rem;
+  line-height: 1.35;
 }
 
 .related-momentum {
   justify-self: end;
   color: #c5dbff;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .source-list {
@@ -591,9 +597,9 @@ h1 {
 
 .source-card {
   display: grid;
-  grid-template-columns: auto 24px;
-  align-items: center;
+  grid-template-columns: 1fr auto;
   gap: 16px;
+  align-items: center;
   padding: 18px 20px;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -607,16 +613,20 @@ h1 {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #93b7ff;
+  display: block;
+  margin-bottom: 8px;
 }
 
 .source-title {
   font-size: 1rem;
   color: #e2e8ff;
-  line-height: 1.55;
+  line-height: 1.5;
+  display: block;
 }
 
 .source-link {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  color: #7cd3ff;
 }
 
 .cta-card {
