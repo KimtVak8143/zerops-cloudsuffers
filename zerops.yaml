@@ -1,0 +1,31 @@
+name: ai-radar
+services:
+  - name: api
+    type: web
+    runtime: python
+    path: backend
+    initCommands:
+      - cd backend && alembic upgrade head
+    command: uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
+    env:
+      DATABASE_URL: ${db_connectionString}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      LLM_API_KEY: ${LLM_API_KEY}
+      LLM_MODEL: ${LLM_MODEL}
+    healthcheck:
+      path: /health
+      interval: 10s
+      timeout: 5s
+      healthy_threshold: 1
+      unhealthy_threshold: 3
+    ports:
+      - 8000
+
+  - name: db
+    type: database
+    runtime: postgres
+    version: 16
+    env:
+      POSTGRES_DB: ${POSTGRES_DB:-ai_radar}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
