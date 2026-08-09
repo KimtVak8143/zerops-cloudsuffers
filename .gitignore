@@ -1,0 +1,11 @@
+.env
+backend/.env
+backend/.venv
+backend/__pycache__/
+backend/**/*.pyc
+ui/node_modules/
+ui/.next/
+ui/.turbo/
+node_modules/
+.next/
+.DS_Store
