@@ -374,6 +374,10 @@ h1 {
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.18);
 }
 
+.trend-detail-shell > * + * {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
 .detail-header-row {
   display: flex;
   justify-content: space-between;
@@ -405,6 +409,7 @@ h1 {
   border-radius: 24px;
   background: rgba(20, 28, 52, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
 }
 
 .trend-pill {
@@ -437,6 +442,7 @@ h1 {
 
 .detail-actions {
   margin-top: 32px;
+  padding-top: 24px;
   display: flex;
   justify-content: flex-start;
 }
@@ -455,6 +461,7 @@ h1 {
 
 .detail-section {
   margin-top: 40px;
+  padding-top: 40px;
 }
 
 .section-heading-row {
@@ -608,6 +615,11 @@ h1 {
   color: inherit;
 }
 
+.source-card:hover {
+  border-color: rgba(109, 175, 255, 0.35);
+  background: rgba(28, 38, 68, 0.95);
+}
+
 .source-type {
   font-size: 0.72rem;
   letter-spacing: 0.14em;
@@ -636,7 +648,7 @@ h1 {
   border-radius: 24px;
   background: linear-gradient(180deg, rgba(32, 41, 82, 0.96), rgba(16, 20, 38, 0.95));
   border: 1px solid rgba(109, 175, 255, 0.16);
-  margin-top: 34px;
+  margin-top: 0;
 }
 
 .cta-card h2 {
@@ -766,7 +778,22 @@ h1 {
   }
 
   .trend-detail-shell {
-    padding: 24px;
+    padding: 22px;
+    border-radius: 20px;
+  }
+
+  .detail-header-row h1 {
+    font-size: clamp(2.2rem, 12vw, 3rem);
+  }
+
+  .detail-section {
+    margin-top: 30px;
+    padding-top: 30px;
+  }
+
+  .source-card {
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 16px;
   }
 
   .stack-column {
