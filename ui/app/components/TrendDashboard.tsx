@@ -3,6 +3,11 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
+export interface TechStackLayer {
+  name: string;
+  items: string[];
+}
+
 export interface Trend {
   id: number;
   name: string;
@@ -12,7 +17,7 @@ export interface Trend {
   tldr: string;
   why_it_matters: string;
   momentum: string;
-  tech_stack: string[];
+  tech_stack: string[] | { layers: TechStackLayer[] } | null;
   related_trends: string[];
 }
 
@@ -44,6 +49,15 @@ function TrendCard({ trend }: { trend: Trend }) {
   const momentum = momentumValue(trend.momentum);
   const related = trend.related_trends?.slice(0, 3) ?? [];
 
+  const techPreview = Array.isArray(trend.tech_stack)
+    ? trend.tech_stack.slice(0, 3).join(" • ")
+    : trend.tech_stack?.layers
+    ? trend.tech_stack.layers
+        .flatMap((layer) => layer.items)
+        .slice(0, 3)
+        .join(" • ")
+    : "";
+
   return (
     <Link href={`/trends/${trend.slug}`} className="trend-card">
       <div className="trend-card-header">
@@ -63,7 +77,7 @@ function TrendCard({ trend }: { trend: Trend }) {
           <div className="momentum-fill" style={{ width: `${momentum}%` }} />
         </div>
         <div className="trend-hint">
-          <span>{trend.tech_stack?.slice(0, 3).join(" • ")}</span>
+          <span>{techPreview}</span>
           <span>•</span>
           <span>{related.length > 0 ? related.join(" • ") : "No related tags"}</span>
         </div>

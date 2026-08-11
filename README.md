@@ -33,7 +33,7 @@ docker compose up -d
 ```powershell
 cd backend
 python -m venv .venv
-.\.venv\Scripts\activate
+.\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 copy .env.example .env
 ```
@@ -42,7 +42,7 @@ copy .env.example .env
 
 ```powershell
 cd backend
-.\.venv\Scripts\activate
+.\.venv\Scripts\Activate.ps1
 alembic upgrade head
 ```
 
@@ -50,7 +50,7 @@ alembic upgrade head
 
 ```powershell
 cd backend
-.\.venv\Scripts\activate
+.\.venv\Scripts\Activate.ps1
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 # Shortcuts
@@ -71,7 +71,7 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 ```powershell
 cd backend
-.\.venv\Scripts\activate
+.\.venv\Scripts\Activate.ps1
 python seed.py
 ```
 
@@ -82,6 +82,16 @@ cd ui
 npm install
 npm run dev
 ```
+
+### One-command local start
+
+If you already created `backend/.venv` and installed dependencies, you can start everything with:
+
+```bash
+bash dev.sh
+```
+
+That script starts Docker Compose, activates the backend virtual environment with `Activate.ps1`, runs `python run.py`, and launches the UI.
 
 ### Health check
 
